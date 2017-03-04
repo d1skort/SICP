@@ -1,0 +1,22 @@
+#lang sicp
+
+(define (sum term a next b)
+  (if (> a b)
+      0
+      (+ (term a)
+         (sum term (next a) next b))))
+
+
+(define (simpson-integral f a b n)
+  (define h (/ (- b a) n))
+
+  (define (term k)
+    (define y (f (+ a (* k h))))
+    (cond ((or (= k 0) (= k n)) y)
+          ((even? k) (* 2.0 y))
+          (else (* 4.0 y))))
+  
+  (* (sum term 0 inc n)
+     (/ h 3.0)))
+
+(define (cube x) (* x x x))
